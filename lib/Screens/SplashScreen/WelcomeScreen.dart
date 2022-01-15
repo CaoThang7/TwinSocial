@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:twin_social/Screens/LoginScreen.dart';
+import 'package:twin_social/Screens/Login/LoginScreen.dart';
+import 'package:twin_social/Screens/Register/RegisterScreen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class WelcomeScreenSate extends State<WelcomeScreen> {
   void _navigateHome() async {
     await Future.delayed(Duration(milliseconds: 3000), () {});
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        context, MaterialPageRoute(builder: (context) => RegisterScreen()));
   }
 
   @override

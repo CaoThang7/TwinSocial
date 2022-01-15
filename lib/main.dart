@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twin_social/Screens/WelcomeScreen.dart';
+import 'package:twin_social/Screens/SplashScreen/WelcomeScreen.dart';
 
 void main() => runApp(MyApp());
 
