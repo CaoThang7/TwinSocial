@@ -26,6 +26,7 @@ class _BodyState extends State<Body> {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(horizontal: 15.0),
+        color: AppColors.baseGrey10Color,
         child: Column(
           children: [
             SizedBox(
