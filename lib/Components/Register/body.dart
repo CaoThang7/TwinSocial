@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twin_social/AppColors/app_colors.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twin_social/Components/Register/valid.dart';
+import 'package:twin_social/NetWork/NetworkHandler.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -17,10 +18,28 @@ class _BodyState extends State<Body> {
   bool visPassword = true;
   bool visConfirmPassword = true;
   final _globalkey = GlobalKey<FormState>();
+  NetworkHandler networkHandler = NetworkHandler();
   // Hàm onclick đăng ký check validate
-  void validate() {
+  void validate() async {
     if (_globalkey.currentState!.validate()) {
-      print("Validated");
+      // Đẩy dữ liệu khi người dùng nhập vào lên database thông qua api register
+      Map<String, String> data = {
+        "fullname": _fullnameController.text,
+        "username": _usernameController.text,
+        "email": _emailController.text,
+        "password": _passwordController.text,
+      };
+      print(data);
+
+      var responseRegister = await networkHandler.post("/register", data);
+      //Login Logic added here
+      if (responseRegister.statusCode == 200 ||
+          responseRegister.statusCode == 201) {
+        print("Thanh cong roi");
+      } else {
+        print("That bai");
+      }
+      ;
     }
   }
 
