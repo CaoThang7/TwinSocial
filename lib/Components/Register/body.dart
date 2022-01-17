@@ -32,7 +32,7 @@ class _BodyState extends State<Body> {
       print(data);
 
       var responseRegister = await networkHandler.post("/register", data);
-      //Login Logic added here
+      
       if (responseRegister.statusCode == 200 ||
           responseRegister.statusCode == 201) {
         print("Thanh cong roi");
