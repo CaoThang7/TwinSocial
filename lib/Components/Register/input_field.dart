@@ -3,14 +3,14 @@ import 'package:twin_social/AppColors/app_colors.dart';
 import 'package:twin_social/Components/Login/styles.dart';
 import 'package:flutter_svg/svg.dart';
 
-class InputLogin extends StatefulWidget {
+class InputRegister extends StatefulWidget {
   final String hint;
   final TextEditingController? controller;
   final Widget? widget;
   final valid_input;
   final suffixIcon;
   final bool visBool;
-  const InputLogin({
+  const InputRegister({
     Key? key,
     required this.hint,
     this.controller,
@@ -21,10 +21,10 @@ class InputLogin extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<InputLogin> createState() => _InputLoginState();
+  State<InputRegister> createState() => _InputRegisterState();
 }
 
-class _InputLoginState extends State<InputLogin> {
+class _InputRegisterState extends State<InputRegister> {
   @override
   Widget build(BuildContext context) {
     return Container(

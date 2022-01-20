@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:twin_social/AppColors/app_colors.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:twin_social/Components/Register/input_field.dart';
+import 'package:twin_social/Components/Register/styles.dart';
 import 'package:twin_social/Components/Register/valid.dart';
 import 'package:twin_social/NetWork/NetworkHandler.dart';
 
@@ -32,7 +34,7 @@ class _BodyState extends State<Body> {
       print(data);
 
       var responseRegister = await networkHandler.post("/register", data);
-      
+
       if (responseRegister.statusCode == 200 ||
           responseRegister.statusCode == 201) {
         print("Thanh cong roi");
@@ -64,26 +66,86 @@ class _BodyState extends State<Body> {
             key: _globalkey,
             child: Column(
               children: [
-                SizedBox(
-                  height: 10,
+                InputRegister(
+                  hint: "fullname",
+                  controller: _fullnameController,
+                  valid_input: validFullName,
+                  suffixIcon: _fullnameController.text.isEmpty
+                      ? Container(width: 0)
+                      : IconButton(
+                          icon: SvgPicture.asset(
+                            "assets/icons/delete.svg",
+                            height: 10,
+                            width: 10,
+                          ),
+                          onPressed: () => _fullnameController.clear(),
+                        ),
+                  visBool: false,
                 ),
-                fullnameTextField(),
-                SizedBox(
-                  height: 10,
+                InputRegister(
+                  hint: "username",
+                  controller: _usernameController,
+                  valid_input: validUserName,
+                  suffixIcon: _usernameController.text.isEmpty
+                      ? Container(width: 0)
+                      : IconButton(
+                          icon: SvgPicture.asset(
+                            "assets/icons/delete.svg",
+                            height: 10,
+                            width: 10,
+                          ),
+                          onPressed: () => _usernameController.clear(),
+                        ),
+                  visBool: false,
                 ),
-                usernameTextField(),
-                SizedBox(
-                  height: 10,
+                InputRegister(
+                  hint: "email",
+                  controller: _emailController,
+                  valid_input: validEmail,
+                  suffixIcon: _emailController.text.isEmpty
+                      ? Container(width: 0)
+                      : IconButton(
+                          icon: SvgPicture.asset(
+                            "assets/icons/delete.svg",
+                            height: 10,
+                            width: 10,
+                          ),
+                          onPressed: () => _emailController.clear(),
+                        ),
+                  visBool: false,
                 ),
-                emailTextField(),
-                SizedBox(
-                  height: 10,
+                InputRegister(
+                  hint: "password",
+                  controller: _passwordController,
+                  valid_input: validPassword,
+                  suffixIcon: IconButton(
+                    icon: visPassword
+                        ? SvgPicture.asset("assets/icons/eyesoff.svg")
+                        : SvgPicture.asset("assets/icons/eyeson.svg"),
+                    onPressed: () {
+                      setState(() {
+                        visPassword = !visPassword;
+                      });
+                    },
+                  ),
+                  visBool: visPassword,
                 ),
-                passwordTextField(),
-                SizedBox(
-                  height: 10,
+                InputRegister(
+                  hint: "confirm",
+                  controller: _confirmController,
+                  valid_input: validConfirmPassword,
+                  suffixIcon: IconButton(
+                    icon: visConfirmPassword
+                        ? SvgPicture.asset("assets/icons/eyesoff.svg")
+                        : SvgPicture.asset("assets/icons/eyeson.svg"),
+                    onPressed: () {
+                      setState(() {
+                        visConfirmPassword = !visConfirmPassword;
+                      });
+                    },
+                  ),
+                  visBool: visConfirmPassword,
                 ),
-                confirmTextField(),
                 SizedBox(
                   height: 10,
                 ),
@@ -99,8 +161,7 @@ class _BodyState extends State<Body> {
                     child: Center(
                       child: Text(
                         "Đăng Ký",
-                        style: TextStyle(
-                            fontSize: 24.0, color: AppColors.baseWhiteColor),
+                        style: textbtnRegister,
                       ),
                     ),
                   ),
@@ -112,197 +173,4 @@ class _BodyState extends State<Body> {
       ),
     );
   }
-
-  Widget fullnameTextField() => TextFormField(
-        controller: _fullnameController,
-        validator: validFullName,
-        decoration: InputDecoration(
-          // Xoá clear text đã nhập
-          suffixIcon: _fullnameController.text.isEmpty
-              ? Container(width: 0)
-              : IconButton(
-                  icon: SvgPicture.asset(
-                    "assets/icons/delete.svg",
-                    height: 10,
-                    width: 10,
-                  ),
-                  onPressed: () => _fullnameController.clear(),
-                ),
-          hintText: "Họ và tên",
-          border: OutlineInputBorder(), //Hiện viền bao quanh TextFormField
-          filled: true,
-          fillColor: Colors.white, // Màu nền trong TextFormField
-          // focusedBorder: hành động khi click vào TextFormField
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: AppColors
-                    .baseGrey30Color), //Click vào viền bao quanh đổi màu
-            borderRadius:
-                BorderRadius.circular(8.0), //bo tròn hoặc vuông tuỳ thích
-          ),
-          // enabledBorder: hành động khi chưa click vào TextFormField
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: AppColors.baseGrey30Color), //Tương tự focusedBorder
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.done,
-      );
-
-  Widget usernameTextField() => TextFormField(
-        controller: _usernameController,
-        validator: validUserName,
-        decoration: InputDecoration(
-          // Xoá clear text đã nhập
-          suffixIcon: _usernameController.text.isEmpty
-              ? Container(width: 0)
-              : IconButton(
-                  icon: SvgPicture.asset(
-                    "assets/icons/delete.svg",
-                    height: 10,
-                    width: 10,
-                  ),
-                  onPressed: () => _usernameController.clear(),
-                ),
-          hintText: "Tên tài khoản",
-          border: OutlineInputBorder(), //Hiện viền bao quanh TextFormField
-          filled: true,
-          fillColor: Colors.white, // Màu nền trong TextFormField
-          // focusedBorder: hành động khi click vào TextFormField
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: AppColors
-                    .baseGrey30Color), //Click vào viền bao quanh đổi màu
-            borderRadius:
-                BorderRadius.circular(8.0), //bo tròn hoặc vuông tuỳ thích
-          ),
-          // enabledBorder: hành động khi chưa click vào TextFormField
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: AppColors.baseGrey30Color), //Tương tự focusedBorder
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.done,
-      );
-
-  Widget emailTextField() => TextFormField(
-        controller: _emailController,
-        validator: validEmail,
-        decoration: InputDecoration(
-          // Xoá clear text đã nhập
-          suffixIcon: _emailController.text.isEmpty
-              ? Container(width: 0)
-              : IconButton(
-                  icon: SvgPicture.asset(
-                    "assets/icons/delete.svg",
-                    height: 10,
-                    width: 10,
-                  ),
-                  onPressed: () => _emailController.clear(),
-                ),
-          hintText: "Email",
-          border: OutlineInputBorder(), //Hiện viền bao quanh TextFormField
-          filled: true,
-          fillColor: Colors.white, // Màu nền trong TextFormField
-          // focusedBorder: hành động khi click vào TextFormField
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: AppColors
-                    .baseGrey30Color), //Click vào viền bao quanh đổi màu
-            borderRadius:
-                BorderRadius.circular(8.0), //bo tròn hoặc vuông tuỳ thích
-          ),
-          // enabledBorder: hành động khi chưa click vào TextFormField
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: AppColors.baseGrey30Color), //Tương tự focusedBorder
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.done,
-      );
-
-  Widget passwordTextField() => TextFormField(
-        controller: _passwordController,
-        validator: validPassword,
-        obscureText: visPassword,
-        decoration: InputDecoration(
-          suffixIcon: IconButton(
-            icon: visPassword
-                ? SvgPicture.asset("assets/icons/eyesoff.svg")
-                : SvgPicture.asset("assets/icons/eyeson.svg"),
-            onPressed: () {
-              setState(() {
-                visPassword = !visPassword;
-              });
-            },
-          ),
-          helperStyle: TextStyle(fontSize: 16, color: Colors.green),
-          hintText: "Mật khẩu",
-          border: OutlineInputBorder(), //Hiện viền bao quanh TextFormField
-          filled: true,
-          fillColor: Colors.white, // Màu nền trong TextFormField
-          // focusedBorder: hành động khi click vào TextFormField
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: AppColors
-                    .baseGrey30Color), //Click vào viền bao quanh đổi màu
-            borderRadius:
-                BorderRadius.circular(8.0), //bo tròn hoặc vuông tuỳ thích
-          ),
-          // enabledBorder: hành động khi chưa click vào TextFormField
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: AppColors.baseGrey30Color), //Tương tự focusedBorder
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.done,
-      );
-
-  Widget confirmTextField() => TextFormField(
-        controller: _confirmController,
-        validator: validConfirmPassword,
-        obscureText: visConfirmPassword,
-        decoration: InputDecoration(
-          suffixIcon: IconButton(
-            icon: visConfirmPassword
-                ? SvgPicture.asset("assets/icons/eyesoff.svg")
-                : SvgPicture.asset("assets/icons/eyeson.svg"),
-            onPressed: () {
-              setState(() {
-                visConfirmPassword = !visConfirmPassword;
-              });
-            },
-          ),
-          helperText: "Mật khẩu nên để 8 ký tự trở lên",
-          helperStyle: TextStyle(fontSize: 16, color: Colors.green),
-          hintText: "Xác nhận mật khẩu",
-          border: OutlineInputBorder(), //Hiện viền bao quanh TextFormField
-          filled: true,
-          fillColor: Colors.white, // Màu nền trong TextFormField
-          // focusedBorder: hành động khi click vào TextFormField
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: AppColors
-                    .baseGrey30Color), //Click vào viền bao quanh đổi màu
-            borderRadius:
-                BorderRadius.circular(8.0), //bo tròn hoặc vuông tuỳ thích
-          ),
-          // enabledBorder: hành động khi chưa click vào TextFormField
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: AppColors.baseGrey30Color), //Tương tự focusedBorder
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.done,
-      );
 }
