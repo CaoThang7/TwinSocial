@@ -18,7 +18,7 @@ class WelcomeScreenSate extends State<WelcomeScreen> {
   void _navigateHome() async {
     await Future.delayed(Duration(milliseconds: 3000), () {});
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => RegisterScreen()));
+        context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 
   @override
